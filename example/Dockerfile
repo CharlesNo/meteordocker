@@ -10,11 +10,11 @@ RUN rm -rf .meteor/local/*
 
 USER 1000
 RUN meteor update --packages-only
-RUN meteor npm install
+RUN meteor npm ci
 RUN meteor build --server-only --directory /build
 
 
-FROM node:alpine as mid
+FROM node:lts-alpine as mid
 
 USER 0
 RUN apk add --no-cache python make g++
@@ -29,7 +29,7 @@ RUN rm -rf node_modules
 RUN rm -f package-lock.json
 RUN npm i
 
-FROM node:alpine
+FROM node:lts-alpine
 
 USER 0
 ENV TZ=Europe/London
